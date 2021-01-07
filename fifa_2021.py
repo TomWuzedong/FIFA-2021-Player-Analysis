@@ -49,12 +49,30 @@ def potential_to_league_rank(data):
     plt.savefig('league_rank_vs._Potential.png')
 
 
+def skills_ratings_by_positions(data):
+    position_mask = (data['player_positions'] == 'ST') \
+        | (data['player_positions'] == 'CM') | (data['player_positions'] == 'CB')
+    new_data = data[position_mask]
+
+    new_data = new_data.loc[:, ['shooting', 'passing', 'dribbling',
+                                'defending', 'physic', 'player_positions']]
+    new_data = new_data.dropna()
+
+    by_position = new_data.groupby('player_positions')
+    shooting_skills = by_position['shooting'].mean()
+    print(shooting_skills)
+    shooting_skills = list(by_position['shooting'].mean())
+    print(shooting_skills)
+    # d = {'Position' : ['ST', 'CM', 'CB'],
+    #      'Mean_Shooting_Rating' : [data[data['player_positions'] == 'ST']]}
+
+
 def main():
     data = pd.read_csv('dataset/players_21.csv')
     cleaned_data = clean_data(data)
     potential_to_age(cleaned_data)
     potential_to_league_rank(cleaned_data)
-
+    skills_ratings_by_positions(cleaned_data)
 
 if __name__ == '__main__':
     main()
