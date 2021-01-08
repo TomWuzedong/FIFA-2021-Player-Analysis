@@ -35,16 +35,28 @@ def potential_to_age(data):
     plt.xlabel("Player's Age")
     plt.ylabel("Player's Potential")
     plt.title("Relationship Between Players' Potential and Their Age")
-    plt.savefig('potential_age.png')
+    plt.savefig('images/potential_age.png')
 
 
 def potential_to_league_rank(data):
-    sns.relplot(kind='line', x='league_rank', y='potential', data=data)
+    fig, [ax1, ax2] = plt.subplots(2, ncols=1, figsize=(10, 8))
+
+    sns.lineplot(x='league_rank', y='potential', data=data, ax=ax1)
     plt.xlabel('League Level the Players Play at')
     plt.ylabel("Player's Potential")
-    plt.title("Relationship Between Players' Potential and the League Level They Plat At"
-              )
-    plt.savefig('league_rank_vs_potential.png')
+    ax1.set_title("Players' Potential By League Level They Plat At")
+
+    new_data = data.groupby('league_rank')
+    potential_mean = new_data['potential'].mean()
+    print(new_data)
+    pot_by_lea = {'league_rank': [1, 2, 3, 4], 'potential_mean': potential_mean}
+    pot_by_lea = pd.DataFrame(pot_by_lea)
+
+    sns.barplot(x='league_rank', y='potential_mean', data=pot_by_lea, ax=ax2)
+    plt.xlabel('League Level the Players Play at')
+    plt.ylabel("Player's Potential")
+
+    plt.savefig('images/league_rank_vs_potential.png')
 
 
 def overall_to_wage(data):
@@ -54,7 +66,7 @@ def overall_to_wage(data):
     plt.ylabel("Player's Salary in Million")
     plt.title("Relationship Between Players' Wage and Their Overall Ratings"
               )
-    plt.savefig('overall_to_wage.png')
+    plt.savefig('images/overall_to_wage.png')
 
 
 def skills_ratings_by_positions_data_cleaning(data):
@@ -83,7 +95,7 @@ def skills_ratings_by_positions_data_cleaning(data):
 
 def skills_ratings_by_positions_data_viz(data):
     (fig, [[ax1, ax2], [ax3, ax4]]) = plt.subplots(2, ncols=2,
-            figsize=(9.5, 9.5))
+                                                   figsize=(9.5, 9.5))
 
     sns.barplot(x='Position', y='mean_shooting_rating', data=data,
                 ax=ax1)
@@ -104,7 +116,7 @@ def skills_ratings_by_positions_data_viz(data):
                 ax=ax4)
     plt.ylabel('Defending Rating')
     ax4.set_title('defending skills by positions')
-    plt.savefig('skill_rating_by_position.png')
+    plt.savefig('images/skill_rating_by_position.png')
 
 
 def predict_position_ml(data):
@@ -142,7 +154,7 @@ def predict_position_ml(data):
     ax1.set_title('Relationship Between Accuracy (Train&Test) and Max Depth')
     sns.lineplot(x='depth assigned', y='test_accuracy', ax=ax2,
                  data=accuracy_scores)
-    plt.savefig('train_test_accuracy_predict_positions.png')
+    plt.savefig('images/train_test_accuracy_predict_positions.png')
 
 
 def main():
