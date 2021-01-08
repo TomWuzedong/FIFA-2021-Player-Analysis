@@ -66,10 +66,10 @@ def skills_ratings_by_positions_data_cleaning(data):
     defending_skills = list(by_position['defending'].mean())
 
     d = {'Position': ['CB', 'CM', 'ST'],
-         'Mean_Shooting_Rating': [element for element in shooting_skills],
-         'Mean_Passing_Rating': [element for element in passing_skills],
-         'Mean_Dribbling_Rating': [element for element in dribbling_skills],
-         'Mean_Defending_Rating': [element for element in defending_skills]
+         'Mean_Shooting_Rating': shooting_skills,
+         'Mean_Passing_Rating': passing_skills,
+         'Mean_Dribbling_Rating': dribbling_skills,
+         'Mean_Defending_Rating': defending_skills
          }
 
     df = pd.DataFrame(data=d)
