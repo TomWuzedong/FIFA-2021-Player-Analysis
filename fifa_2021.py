@@ -71,8 +71,9 @@ def overall_to_wage(data):
 
 def skills_ratings_by_positions_data_cleaning(data):
     position_mask = (data['player_positions'] == 'ST') \
-        | (data['player_positions'] == 'CM') | (data['player_positions'
-            ] == 'CB')
+                    | (data['player_positions'] == 'CM') \
+                    | (data['player_positions'
+                    ] == 'CB')
     new_data = data[position_mask]
 
     new_data = new_data.loc[:, ['shooting', 'passing', 'dribbling',
