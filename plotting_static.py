@@ -6,6 +6,10 @@ sns.set()
 
 
 def potential_to_age(data):
+    """
+    This function uses the seaborn package to plot a line plot that
+    shows the relationship between players' age and there potential
+    """
     sns.relplot(kind='line', x='age', y='potential', data=data)
     plt.xlabel("Player's Age")
     plt.ylabel("Player's Potential")
@@ -14,6 +18,14 @@ def potential_to_age(data):
 
 
 def potential_to_league_rank(data):
+    """
+    This function first plots a line plot indicating the relationship between
+    players' potential and the league level that they play at.
+    Then, it creates a new dataset whose columns are the league rank (1-4) and
+    the precomputed average potential value of the players in each of the
+    league level; and it finally shows the relationship between these two
+    variables using a bar plot.
+    """
     (fig, [ax1, ax2]) = plt.subplots(2, ncols=1, figsize=(10, 8))
 
     sns.lineplot(x='league_rank', y='potential', data=data, ax=ax1)
@@ -36,36 +48,42 @@ def potential_to_league_rank(data):
 
 
 def overall_to_wage(data):
+    """
+    This function uses a line plot to show the relationship between players'
+    overall ratings and their wage (weekly salaries), which is divided by
+    100000 in the preprocessing steps to make the units in million.
+    """
     data['wage_eur'] = data['wage_eur'] // 100000
     sns.relplot(kind='line', x='overall', y='wage_eur', data=data)
     plt.xlabel("Player's Overall Rating")
     plt.ylabel("Player's Salary in Million")
-    plt.title("Relationship Between Players' Wage and Their Overall Ratings"
-              )
+    plt.title("Relationship Between Players' Wage and Their Overall Ratings")
     plt.savefig('images/overall_to_wage.png')
 
 
 def skills_ratings_by_positions_data_viz(data):
+    """
+    This function makes use of the preprocessed (by the srbp_data_cleaning
+    function in data_cleaning.py) position data and plots different skill
+    ratings (shooting, passing, dribbling, defending) by position (ST, CM, CB)
+    using bar plots, which are assigned into four subplots.
+    """
     (fig, [[ax1, ax2], [ax3, ax4]]) = plt.subplots(2, ncols=2,
                                                    figsize=(9.5, 9.5))
 
-    sns.barplot(x='Position', y='mean_shooting_rating', data=data,
-                ax=ax1)
+    sns.barplot(x='Position', y='mean_shooting_rating', data=data, ax=ax1)
     plt.ylabel('Shooting Ratings')
     ax1.set_title('shooting skills by positions')
 
-    sns.barplot(x='Position', y='mean_passing_rating', data=data,
-                ax=ax2)
+    sns.barplot(x='Position', y='mean_passing_rating', data=data, ax=ax2)
     plt.ylabel('Passing Rating')
     ax2.set_title('passing skills by positions')
 
-    sns.barplot(x='Position', y='mean_dribbling_rating', data=data,
-                ax=ax3)
+    sns.barplot(x='Position', y='mean_dribbling_rating', data=data, ax=ax3)
     plt.ylabel('Dribbling Rating')
     ax3.set_title('dribbling skills by positions')
 
-    sns.barplot(x='Position', y='mean_defending_rating', data=data,
-                ax=ax4)
+    sns.barplot(x='Position', y='mean_defending_rating', data=data, ax=ax4)
     plt.ylabel('Defending Rating')
     ax4.set_title('defending skills by positions')
     plt.savefig('images/skill_rating_by_position.png')
