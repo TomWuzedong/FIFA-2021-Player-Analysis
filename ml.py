@@ -9,6 +9,16 @@ sns.set()
 
 
 def predict_position_ml(data):
+    """
+    This function makes use of a DecisionTreeClassifier machine learning
+    model and predicts the players' positions based on all other attributes.
+    The analysis involves one-hot encoding to handle the categorical
+    data in the features and split the dataset into features_train,
+    features_test, labels_train, labels_test. It also specifies a certain
+    range of values for the hyper-parameters (tree height 1-49) and compute
+    the accuracy scores associate with each value in order to optimize the
+    model, and uses line plot to visualize the different results.
+    """
     elim_gk = data['player_positions'] != 'GK'
     data = data[elim_gk]
     data = data.dropna()
