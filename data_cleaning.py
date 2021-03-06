@@ -5,6 +5,10 @@ sns.set()
 
 
 def clean_data(data):
+    """
+    This is a data cleaning function that fetches only the
+    columns that will be used in this entire analysis.
+    """
     new_data = data.loc[:, [
         'age',
         'height_cm',
@@ -27,9 +31,16 @@ def clean_data(data):
 
 
 def srbp_data_cleaning(data):
-    position_mask = (data['player_positions'] == 'ST') \
-        | (data['player_positions'] == 'CM') | (data['player_positions'
-            ] == 'CB')
+    """
+    This is the data cleaning function for the skill ratings by
+    position analysis. It fetches out the "ST", "CM", and "CB" positions
+    and finds the mean value of 'shooting', 'passing', 'dribbling' and
+    'defending' skill ratings in each of these three positions, thus forming
+    a new dataframe.
+    """
+    position_mask = (data['player_positions'] == 'ST') |\
+                    (data['player_positions'] == 'CM') |\
+                    (data['player_positions'] == 'CB')
     new_data = data[position_mask]
 
     new_data = new_data.loc[:, ['shooting', 'passing', 'dribbling',
